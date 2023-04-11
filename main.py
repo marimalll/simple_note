@@ -3,15 +3,13 @@ from flask import Flask
 from flask import Flask, render_template, session
 from flask import redirect, request, make_response
 
-
-
 app = Flask(__name__)
 
 
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('base.html', title='Simple note', picture_name="\static\png_files\welcome.png")
+    return render_template('base.html')
 
 
 if __name__ == '__main__':
