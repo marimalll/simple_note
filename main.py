@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('base.html', title='Simple note')
+    return render_template('base.html', title='Simple note', picture_name="\static\png_files\welcome.png")
 
 
 if __name__ == '__main__':
