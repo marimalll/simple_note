@@ -20,6 +20,9 @@ class User(SqlAlchemyBase):
                                      default=datetime.datetime.now)
     notes = orm.relationship("Notes", back_populates='user')
 
+    def __repr__(self):
+        return f"{self.__class__.__name__} {self.id} {self.name} {self.email}"
+
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
 

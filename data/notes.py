@@ -5,7 +5,7 @@ from sqlalchemy import orm
 from .db_session import SqlAlchemyBase
 
 
-class News(SqlAlchemyBase):
+class Notes(SqlAlchemyBase):
     __tablename__ = 'notes'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -17,3 +17,6 @@ class News(SqlAlchemyBase):
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey("users.id"))
     user = orm.relationship('User')
+
+    def __repr__(self):
+        return f"{self.__class__.__name__} {self.title} {self.content}"
