@@ -1,5 +1,5 @@
 import flask
-from flask import Flask
+from flask import Flask, url_for
 from flask import Flask, render_template, session
 from flask import redirect, request, make_response
 from flask import make_response
@@ -7,6 +7,7 @@ from data import db_session
 from data.users import User
 from forms.login import LoginForm
 from forms.user import RegisterForm
+from weather import weather_forecast
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'ourprojectsecretkey'
@@ -49,24 +50,34 @@ def register():
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
 
-    global color_value, dark_theme_value
+    global color_value, dark_theme_value, city_value
+    data = []
     if request.method == 'GET':
         if dark_theme_value == 'on':
-            return render_template('settings.html', color_value=color_value, dark_theme_value='on')
+            return render_template('settings.html', color_value=color_value, dark_theme_value='on', city_value=city_value)
         else:
-            return render_template('settings.html', color_value=color_value, dark_theme_value='off')
+            return render_template('settings.html', color_value=color_value, dark_theme_value='off', city_value=city_value)
     elif request.method == 'POST':
         color_value = request.form['color']
+        city_value = request.form['city']
         if len(request.form) == 2:
             dark_theme_value = 'on'
         else:
             dark_theme_value = 'off'
-    print(request.form['color'])
-    print(dark_theme_value)
-    return redirect('/index')
+        if city_value != 'Не_указан':
+            data = weather_forecast(city_value)
+        else:
+            data = ['Не указан']
+    return redirect(url_for('main_page', data=data))
 
 
-
+@app.route('/main_page/<data>')
+def main_page(data):
+    data = data[1:-1].split(', ')
+    reformat = []
+    for i in data:
+        reformat.append(i[1:-1])
+    return render_template('main_page.html', data=reformat)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -83,5 +94,6 @@ def login():
 if __name__ == '__main__':
     dark_theme_value = 'off'
     color_value = '#0000ff'
+    city_value = "Не_указан"
     db_session.global_init("db/simple_note.db")
-    app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1', debug=True)
