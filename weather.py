@@ -29,11 +29,12 @@ def weather_forecast(city):
         pressure = response_json['main']['pressure']
         sunrise_time = dt.datetime.utcfromtimestamp(response_json['sys']['sunrise'] + response_json['timezone']).strftime('%d.%m.%Y %H:%M') # для того чтоб отображать время восхода в локальном времени
         sunset_time = dt.datetime.utcfromtimestamp(response_json['sys']['sunset'] + response_json['timezone']).strftime('%d.%m.%Y %H:%M')
-
+        print(str(icon_url))
+        print(type(icon_url))
         return [dt.datetime.now().strftime('%d.%m.%Y %H:%M'),
                 f"Температура в {city}: {round(real_temperature, 2)}C", f"Ощущается как: {round(feels_like_temperature, 2)}C",
                 f"Скорость ветра: {wind_speed} метров в секунду", f"Влажность: {humidity}", f"{description}", f"Давление: {pressure} мм.рт.ст",
-                f"время восхода солнца: {sunrise_time}", f"время заката: {sunset_time}"]
+                f"время восхода солнца: {sunrise_time}", f"время заката: {sunset_time}"], icon_url
 
     else:
-        return ['Введите местоположение корректно']
+        return ['Введите местоположение корректно'], "https://openweathermap.org/img/wn/02d@2x.png"

@@ -1,4 +1,5 @@
 import flask
+import time
 from flask import Flask, url_for
 from flask import Flask, render_template, session
 from flask import redirect, request, make_response
@@ -64,20 +65,17 @@ def settings():
             dark_theme_value = 'on'
         else:
             dark_theme_value = 'off'
-        if city_value != 'Не_указан':
-            data = weather_forecast(city_value)
-        else:
-            data = ['Не указан']
-    return redirect(url_for('main_page', data=data))
+    print(city_value, color_value, dark_theme_value)
+    return redirect(url_for('index'))
 
 
-@app.route('/main_page/<data>')
-def main_page(data):
-    data = data[1:-1].split(', ')
-    reformat = []
-    for i in data:
-        reformat.append(i[1:-1])
-    return render_template('main_page.html', data=reformat)
+# тестовая страница для виджетов погоды и календаря
+@app.route('/test', methods=["GET", "POST"])
+def test():
+    data, icon_url = weather_forecast(city_value)
+    print(data, icon_url)
+
+    return render_template("test.html", data=data, icon_url=icon_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
