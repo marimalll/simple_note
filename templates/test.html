@@ -1,3 +1,24 @@
+{%if dark_theme_value == "off"%}
+    <style>
+        body{
+            background: url("static/img/bg/creating_light.jpg");
+            -moz-backround-size: 100%;
+            -webkit-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+            }
+    </style>
+{%else%}
+    <style>
+        body{
+            background: url("static/img/bg/creating_dark.jpg");
+            -moz-backround-size: 100%;
+            -webkit-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+            }
+    </style>
+{%endif%}
 {% extends "base.html" %}
 
 {% block content %}

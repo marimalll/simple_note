@@ -19,7 +19,7 @@ app.config['SECRET_KEY'] = 'ourprojectsecretkey'
 def index():
     data = 'Простое заметки - это простой и удобный инструмент для создания собственных заметок. Вы можете легко создавать, редактировать и удалять заметки в любое время. Этот инструмент также позволяет создавать списки задач и отмечать их по мере выполнения.'
     # print(color_value, dark_theme_value)
-    return render_template('index.html', data=data.split('. '))
+    return render_template('index.html', data=data.split('. '), dark_theme_value=dark_theme_value)
 
 
 @app.route('/about')
@@ -61,7 +61,7 @@ def settings():
     elif request.method == 'POST':
         color_value = request.form['color']
         city_value = request.form['city']
-        if len(request.form) == 2:
+        if len(request.form) == 3:
             dark_theme_value = 'on'
         else:
             dark_theme_value = 'off'
@@ -75,7 +75,7 @@ def test():
     data, icon_url = weather_forecast(city_value)
     print(data, icon_url)
 
-    return render_template("test.html", data=data, icon_url=icon_url)
+    return render_template("test.html", data=data, icon_url=icon_url, dark_theme_value=dark_theme_value)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -1,5 +1,25 @@
+{%if dark_theme_value == "on"%}
+    <style>
+        body{
+            background: url("static/img/bg/welcome_dark.jpg");
+            -moz-backround-size: 100%;
+            -webkit-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+            }
+    </style>
+{%else%}
+    <style>
+        body{
+            background: url("static/img/bg/welcome_light.jpg");
+            -moz-backround-size: 100%;
+            -webkit-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+            }
+    </style>
+{%endif%}
 {% extends "base.html" %}
-
 {% block content %}
     {% for item in data %}
         <h4>{{item}}</h4>
