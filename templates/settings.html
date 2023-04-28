@@ -1,17 +1,17 @@
-{%if dark_theme_value == "off"%}
-    <style>
-        body{
-            background: url("static/img/bg/settings_light.jpg");
-            -moz-backround-size: 100%;
-            -webkit-background-size: 100%;
-            -o-background-size: 100%;
-            background-size: 100%;
-            }
-    </style>
+{%if settings.theme == "1"%}
+        <style>
+            body{
+                background: url("static/image/background/settings_dark.jpg");
+                -moz-backround-size: 100%;
+                -webkit-background-size: 100%;
+                -o-background-size: 100%;
+                background-size: 100%;
+                }
+        </style>
 {%else%}
     <style>
         body{
-            background: url("static/img/bg/settings_dark.jpg");
+            background: url("static/image/background/settings_light.jpg");
             -moz-backround-size: 100%;
             -webkit-background-size: 100%;
             -o-background-size: 100%;
@@ -22,28 +22,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Настройки</h1>
-    <form class="settings_form" method="post">
+    {%if settings.theme == "1"%}
+        <h1 style="color:white;">Настройки</h1>
+    {%else%}
+        <h1 style="color:black;">Настройки</h1>
+    {%endif%}
+    <form action="" class="settings_form" method="post">
+        {{ form.hidden_tag() }}
+
+          {{ form.bg_color.label }}<br>
+             {{ form.bg_color(class="form-control", type="color") }}<br>
+                {% for error in form.bg_color.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
+        </div>
         <div class="form-group">
-          <label for="colorpicker">Цвет оформления заметок:
-            <input type="color" id="colorpicker" name="color" value={{color_value}}>
-          </label>
+          {{ form.text_color.label }}<br>
+             {{ form.text_color(class="form-control", type="color") }}<br>
+                {% for error in form.text_color.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
         </div>
-        {%if dark_theme_value == 'on'%}
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="dark_theme" checked>
-                <label class="form-check-label" for="flexSwitchCheckDefault">Темная тема</label>
-            </div>
-        {%else%}
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" name="dark_theme">
-                <label class="form-check-label" for="flexSwitchCheckDefault">Темная тема</label>
-            </div>
-        {%endif%}
+            <p>{{ form.theme() }} {{ form.theme.label }}</p>
         <div>
-            <label for="city">Ваш город: </label><br>
-            <input type="text" id="city" name="city" value={{city_value}}>
+            {{ form.city.label }}<br>
+             {{ form.city(class="form-control") }}<br>
+                {% for error in form.city.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </div>
+                {% endfor %}
         </div>
-        <button type="submit" class="btn btn-primary">Сохранить</button>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     </form>
 {% endblock %}

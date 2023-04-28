@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+{%if settings.theme == "1"%}
+    <style>
+        body{
+            background: url("static/image/background/main_dark.jpg");
+            -moz-backround-size: 100%;
+            -webkit-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+            }
+    </style>
+{%else%}
+    <style>
+        body{
+            background: url("static/image/background/main_light.jpg");
+            -moz-backround-size: 100%;
+            -webkit-background-size: 100%;
+            -o-background-size: 100%;
+            background-size: 100%;
+            }
+    </style>
+{%endif%}
+    <h1>Добавление записи</h1>
+    <form action="" class="border rounded" enctype="multipart/form-data"
+          method="post" style="background-color: {{settings.bg_color}}; color: {{settings.text_color}}">
+        {{ form.hidden_tag() }}
+            <p>
+                {{ form.title.label }}<br>
+                {{ form.title(class="form-control") }}<br>
+                {% for error in form.title.errors %}
+                    <p class="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.content.label }}<br>
+                {{ form.content(class="form-control") }}<br>
+                {% for error in form.content.errors %}
+                    <p content="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            </p>
+            <p>
+                {{ form.image.label }}<br>
+                {{ form.image(class="form-control-file") }}<br>
+                {% for error in form.image.errors %}
+                    <p content="alert alert-danger" role="alert">
+                        {{ error }}
+                    </p>
+
+                {% endfor %}
+            </p>
+
+            <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+            {{message}}
+    </form>
+{% endblock %}
